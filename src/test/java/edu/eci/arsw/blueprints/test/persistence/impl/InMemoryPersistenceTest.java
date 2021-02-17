@@ -100,7 +100,7 @@ public class InMemoryPersistenceTest {
         Point[] pts3=new Point[]{new Point(0, 0),new Point(10, 10)};
         Blueprint bp3=new Blueprint("john", "thepaintThree",pts);
 
-        Set<Blueprint> blueprints = new HashSet<Blueprint>();
+        ArrayList<Blueprint> blueprints = new ArrayList<Blueprint> ();
         blueprints.add(bp);
         blueprints.add(bp2);
         blueprints.add(bp3);
@@ -109,7 +109,7 @@ public class InMemoryPersistenceTest {
         ibpp.saveBlueprint(bp2);
         ibpp.saveBlueprint(bp3);
 
-        ArrayList<Blueprint> blueprintsResult = ibpp.getBluePrinstByAuthor("john");
+        //ArrayList<Blueprint> blueprintsResult = ibpp.getBlueprintsByAuthor("john");
         assertEquals(true,true);
 
     }

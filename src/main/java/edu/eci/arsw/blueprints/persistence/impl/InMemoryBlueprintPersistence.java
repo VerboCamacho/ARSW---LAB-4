@@ -13,9 +13,7 @@ import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -33,14 +31,18 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
         Blueprint bp=new Blueprint("_authorname_", "_bpname_ ",pts);
         blueprints.put(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
         
-    }    
+    }
+
+
     
     @Override
     public void saveBlueprint(Blueprint bp) throws BlueprintPersistenceException {
+        //System.out.println("llega");
         if (blueprints.containsKey(new Tuple<>(bp.getAuthor(),bp.getName()))){
             throw new BlueprintPersistenceException("The given blueprint already exists: "+bp);
         }
         else{
+
             blueprints.put(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
         }        
     }
@@ -48,6 +50,17 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
     @Override
     public Blueprint getBlueprint(String author, String bprintname) throws BlueprintNotFoundException {
         return blueprints.get(new Tuple<>(author, bprintname));
+    }
+
+
+
+    @Override
+    public Set<Blueprint> getAllBlueprints() throws BlueprintNotFoundException {
+        Set<Blueprint> authorBlueprints = new HashSet<>(blueprints.values());
+        if (authorBlueprints.isEmpty()) {
+            throw new BlueprintNotFoundException("No existe ningún plano del autor");
+        }
+        return authorBlueprints;
     }
 
     @Override
@@ -61,6 +74,9 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
         }
         return bluePrints;
     }
+
+
+
 
 
 }

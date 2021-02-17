@@ -8,6 +8,7 @@ package edu.eci.arsw.blueprints.persistence;
 import edu.eci.arsw.blueprints.model.Blueprint;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  *
@@ -33,4 +34,7 @@ public interface BlueprintsPersistence {
     public Blueprint getBlueprint(String author,String bprintname) throws BlueprintNotFoundException;
 
     public ArrayList<Blueprint> getBluePrinstByAuthor(String author) throws BlueprintNotFoundException;
+
+    //public Set<Blueprint> getBlueprintsByAuthorS(String author);
+    public Set<Blueprint> getAllBlueprints() throws BlueprintNotFoundException;
 }
