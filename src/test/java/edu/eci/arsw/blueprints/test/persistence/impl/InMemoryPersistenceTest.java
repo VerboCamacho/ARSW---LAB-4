@@ -10,10 +10,6 @@ import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Test;
@@ -24,41 +20,41 @@ import static org.junit.Assert.*;
  * @author hcadavid
  */
 public class InMemoryPersistenceTest {
-    
+
     @Test
     public void saveNewAndLoadTest() throws BlueprintPersistenceException, BlueprintNotFoundException{
         InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
 
         Point[] pts0=new Point[]{new Point(40, 40),new Point(15, 15)};
         Blueprint bp0=new Blueprint("mack", "mypaint",pts0);
-        
+
         ibpp.saveBlueprint(bp0);
-        
+
         Point[] pts=new Point[]{new Point(0, 0),new Point(10, 10)};
         Blueprint bp=new Blueprint("john", "thepaint",pts);
-        
+
         ibpp.saveBlueprint(bp);
-        
+
         assertNotNull("Loading a previously stored blueprint returned null.",ibpp.getBlueprint(bp.getAuthor(), bp.getName()));
-        
+
         assertEquals("Loading a previously stored blueprint returned a different blueprint.",ibpp.getBlueprint(bp.getAuthor(), bp.getName()), bp);
-        
+
     }
 
 
     @Test
     public void saveExistingBpTest() {
         InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
-        
+
         Point[] pts=new Point[]{new Point(0, 0),new Point(10, 10)};
         Blueprint bp=new Blueprint("john", "thepaint",pts);
-        
+
         try {
             ibpp.saveBlueprint(bp);
         } catch (BlueprintPersistenceException ex) {
             fail("Blueprint persistence failed inserting the first blueprint.");
         }
-        
+
         Point[] pts2=new Point[]{new Point(10, 10),new Point(20, 20)};
         Blueprint bp2=new Blueprint("john", "thepaint",pts2);
 
@@ -67,53 +63,12 @@ public class InMemoryPersistenceTest {
             fail("An exception was expected after saving a second blueprint with the same name and autor");
         }
         catch (BlueprintPersistenceException ex){
-            
-        }
-    }
 
-    @Test
-    public void getBluePrint() throws BlueprintNotFoundException {
-        InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
-
-        Point[] pts=new Point[]{new Point(0, 0),new Point(10, 10)};
-        Blueprint bp=new Blueprint("john", "thepaint",pts);
-        try {
-            ibpp.saveBlueprint(bp);
-        } catch (BlueprintPersistenceException ex) {
-            fail("Blueprint persistence failed inserting the first blueprint.");
         }
 
-        Blueprint blueprint = ibpp.getBlueprint("john", "thepaint");
-        assertEquals(blueprint,bp);
-    }
-
-    @Test
-    public void getBluePrintsByAuthor() throws BlueprintPersistenceException, BlueprintNotFoundException {
-        InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
-
-        Point[] pts=new Point[]{new Point(0, 0),new Point(10, 10)};
-        Blueprint bp=new Blueprint("john", "thepaintOne",pts);
-
-        Point[] pts2=new Point[]{new Point(0, 0),new Point(10, 10)};
-        Blueprint bp2=new Blueprint("john", "thepaintTwo",pts);
-
-        Point[] pts3=new Point[]{new Point(0, 0),new Point(10, 10)};
-        Blueprint bp3=new Blueprint("john", "thepaintThree",pts);
-
-        ArrayList<Blueprint> blueprints = new ArrayList<Blueprint> ();
-        blueprints.add(bp);
-        blueprints.add(bp2);
-        blueprints.add(bp3);
-
-        ibpp.saveBlueprint(bp);
-        ibpp.saveBlueprint(bp2);
-        ibpp.saveBlueprint(bp3);
-
-        //ArrayList<Blueprint> blueprintsResult = ibpp.getBlueprintsByAuthor("john");
-        assertEquals(true,true);
 
     }
 
 
-    
+
 }
