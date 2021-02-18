@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
  *
  * @author Verbo Camacho,Nikolai Bermudez
  */
-public class FiltroRedundanciaTest  {
+public class FiltroRedundanciaMuestreoTest {
     /**
      * Se agregan 3 puntos iguales
      * el Filtro Redundancia deberia borrar 2 y dejar un solo punto
