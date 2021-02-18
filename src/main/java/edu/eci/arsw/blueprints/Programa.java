@@ -21,6 +21,7 @@ public class Programa {
         String author2 = "Verb";
         String name1 = "Whithepalms";
         String name2 = "Bigman";
+
         Point[] puntos = new Point[]{ new Point(-10, 10),new Point(-10, 10),new Point(-10, 10)};
         Blueprint blueprintone = new Blueprint(author1, name1, puntos);
         Blueprint blueprinttwo = new Blueprint(author2, name2, puntos);

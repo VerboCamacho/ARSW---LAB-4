@@ -12,7 +12,12 @@ import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import edu.eci.arsw.blueprints.services.BlueprintsServices;
 import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import static org.junit.Assert.*;
 
 /**
@@ -20,9 +25,24 @@ import static org.junit.Assert.*;
  * @author hcadavid
  */
 public class InMemoryPersistenceTest {
-
     @Test
     public void saveNewAndLoadTest() throws BlueprintPersistenceException, BlueprintNotFoundException{
+
+        InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
+
+        Point[] pts0=new Point[]{new Point(40, 40),new Point(15, 15)};
+        Blueprint bp0=new Blueprint("mack", "mypaint",pts0);
+        ibpp.saveBlueprint(bp0);
+        Point[] pts=new Point[]{new Point(0, 0),new Point(10, 10)};
+        Blueprint bp=new Blueprint("john", "thepaint",pts);
+        ibpp.saveBlueprint(bp);
+        assertNotNull("Loading a previously stored blueprint returned null.",ibpp.getBlueprint(bp.getAuthor(), bp.getName()));
+        assertEquals("Loading a previously stored blueprint returned a different blueprint.",ibpp.getBlueprint(bp.getAuthor(), bp.getName()), bp);
+
+    }
+    @Test
+    public void debefuncionargetByAuthorTest() throws BlueprintPersistenceException, BlueprintNotFoundException{
+
         InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
 
         Point[] pts0=new Point[]{new Point(40, 40),new Point(15, 15)};
@@ -34,10 +54,29 @@ public class InMemoryPersistenceTest {
         Blueprint bp=new Blueprint("john", "thepaint",pts);
 
         ibpp.saveBlueprint(bp);
+        //System.out.println(ibpp.getBluePrinstByAuthor("john").get(0).getPoints());
 
         assertNotNull("Loading a previously stored blueprint returned null.",ibpp.getBlueprint(bp.getAuthor(), bp.getName()));
+        //prueba get points by author "john"
+        assertEquals(ibpp.getBluePrinstByAuthor("john").get(0).getPoints().get(0),pts[0]);
 
-        assertEquals("Loading a previously stored blueprint returned a different blueprint.",ibpp.getBlueprint(bp.getAuthor(), bp.getName()), bp);
+
+
+    }
+    @Test
+    public void debefuncionargetByAuthorTest2() throws BlueprintPersistenceException, BlueprintNotFoundException{
+
+        InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
+        Point[] pts0=new Point[]{new Point(40, 40),new Point(15, 15)};
+        Blueprint bp0=new Blueprint("mack", "mypaint",pts0);
+        ibpp.saveBlueprint(bp0);
+        Point[] pts=new Point[]{new Point(0, 0),new Point(10, 10)};
+        Blueprint bp=new Blueprint("john", "thepaint",pts);
+        ibpp.saveBlueprint(bp);
+        //System.out.println(ibpp.getBluePrinstByAuthor("john").get(0).getPoints());
+        assertNotNull("Loading a previously stored blueprint returned null.",ibpp.getBlueprint(bp.getAuthor(), bp.getName()));
+        //prueba get points by author "john"
+        assertEquals(ibpp.getBluePrinstByAuthor("mack").get(0).getPoints().get(1),pts0[1]);
 
     }
 

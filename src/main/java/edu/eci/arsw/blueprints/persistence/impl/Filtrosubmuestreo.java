@@ -21,7 +21,6 @@ public class Filtrosubmuestreo implements Filtro{
     public void filtrar(){
         Point[] pts= bluepri.getPoints().toArray(new Point[0]);
         ArrayList<Point> puntosF=new ArrayList<Point>();
-
         for(int i=1;i<pts.length+1;i++){
             //System.out.println(pts[i+1].getX()+" "+pts[i+1].getY() );
             //System.out.println(i%2);

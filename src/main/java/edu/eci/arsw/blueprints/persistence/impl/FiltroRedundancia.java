@@ -41,6 +41,5 @@ public class FiltroRedundancia implements Filtro {
 //            }
             bluepri.setPuntos(puntosF);
 
-
     }
 }
