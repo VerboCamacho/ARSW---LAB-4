@@ -9,6 +9,7 @@ package edu.eci.arsw.blueprints.persistence;
  *
  * @author hcadavid
  */
+
 public class BlueprintNotFoundException extends Exception{
 
     public BlueprintNotFoundException(String message) {

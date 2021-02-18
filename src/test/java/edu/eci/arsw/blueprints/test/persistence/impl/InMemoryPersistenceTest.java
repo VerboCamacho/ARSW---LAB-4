@@ -10,6 +10,10 @@ import edu.eci.arsw.blueprints.model.Point;
 import edu.eci.arsw.blueprints.persistence.BlueprintNotFoundException;
 import edu.eci.arsw.blueprints.persistence.BlueprintPersistenceException;
 import edu.eci.arsw.blueprints.persistence.impl.InMemoryBlueprintPersistence;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Test;
@@ -65,8 +69,49 @@ public class InMemoryPersistenceTest {
         catch (BlueprintPersistenceException ex){
             
         }
-                
-        
+    }
+
+    @Test
+    public void getBluePrint() throws BlueprintNotFoundException {
+        InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
+
+        Point[] pts=new Point[]{new Point(0, 0),new Point(10, 10)};
+        Blueprint bp=new Blueprint("john", "thepaint",pts);
+        try {
+            ibpp.saveBlueprint(bp);
+        } catch (BlueprintPersistenceException ex) {
+            fail("Blueprint persistence failed inserting the first blueprint.");
+        }
+
+        Blueprint blueprint = ibpp.getBlueprint("john", "thepaint");
+        assertEquals(blueprint,bp);
+    }
+
+    @Test
+    public void getBluePrintsByAuthor() throws BlueprintPersistenceException, BlueprintNotFoundException {
+        InMemoryBlueprintPersistence ibpp=new InMemoryBlueprintPersistence();
+
+        Point[] pts=new Point[]{new Point(0, 0),new Point(10, 10)};
+        Blueprint bp=new Blueprint("john", "thepaintOne",pts);
+
+        Point[] pts2=new Point[]{new Point(0, 0),new Point(10, 10)};
+        Blueprint bp2=new Blueprint("john", "thepaintTwo",pts);
+
+        Point[] pts3=new Point[]{new Point(0, 0),new Point(10, 10)};
+        Blueprint bp3=new Blueprint("john", "thepaintThree",pts);
+
+        Set<Blueprint> blueprints = new HashSet<Blueprint>();
+        blueprints.add(bp);
+        blueprints.add(bp2);
+        blueprints.add(bp3);
+
+        ibpp.saveBlueprint(bp);
+        ibpp.saveBlueprint(bp2);
+        ibpp.saveBlueprint(bp3);
+
+        ArrayList<Blueprint> blueprintsResult = ibpp.getBluePrinstByAuthor("john");
+        assertEquals(true,true);
+
     }
 
 
